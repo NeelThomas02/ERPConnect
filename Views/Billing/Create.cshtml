@@ -1,0 +1,30 @@
+@model ERPConnect.Models.Invoice
+
+<h1>Create New Invoice</h1>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label asp-for="CustomerId"></label>
+        <input asp-for="CustomerId" />
+        <span asp-validation-for="CustomerId"></span>
+    </div>
+    <div>
+        <label asp-for="InvoiceDate"></label>
+        <input asp-for="InvoiceDate" type="date" />
+        <span asp-validation-for="InvoiceDate"></span>
+    </div>
+    <div>
+        <label asp-for="TotalAmount"></label>
+        <input asp-for="TotalAmount" />
+        <span asp-validation-for="TotalAmount"></span>
+    </div>
+
+    <button type="submit">Save Invoice</button>
+</form>
+
+
+<a href="/Billing/Index">Back to Invoices</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

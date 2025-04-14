@@ -227,3 +227,4 @@ C:\Users\neelt\OneDrive\Documents\Projects\ERPConnect\obj\Debug\net9.0\refint\ER
 C:\Users\neelt\OneDrive\Documents\Projects\ERPConnect\obj\Debug\net9.0\ERPConnect.pdb
 C:\Users\neelt\OneDrive\Documents\Projects\ERPConnect\obj\Debug\net9.0\ERPConnect.genruntimeconfig.cache
 C:\Users\neelt\OneDrive\Documents\Projects\ERPConnect\obj\Debug\net9.0\ref\ERPConnect.dll
+C:\Users\neelt\OneDrive\Documents\Projects\ERPConnect\obj\Debug\net9.0\ERPConnect.sourcelink.json
