@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,38 +10,32 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ERPConnect.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ERPConnect</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" 
-                data-target="#navbarSupportedContent" 
-                aria-controls="navbarSupportedContent" 
-                aria-expanded="false" 
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-
-                <!-- Existing links, like Home, Privacy, etc. -->
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-
-                <!-- Add your new links here -->
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Inventory" asp-action="Index">Inventory</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Billing" asp-action="Index">Billing</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+            <div class="container">
+                <!-- existing brand and other links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Products" asp-action="Index" class="nav-link">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Inventory" asp-action="Index" class="nav-link">Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Customers" asp-action="Index" class="nav-link">Customers</a>
+                    </li>
+                    <!-- Add this -->
+                    <li class="nav-item">
+                        <a asp-controller="Billing" asp-action="Index" class="nav-link">Invoices</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
     </header>
     <div class="container">
@@ -59,4 +54,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

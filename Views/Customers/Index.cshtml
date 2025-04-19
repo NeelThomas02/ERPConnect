@@ -1,0 +1,29 @@
+@model IEnumerable<ERPConnect.Models.Customer>
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Customer</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var customer in Model)
+    {
+        <tr>
+            <td>@customer.CustomerId</td>
+            <td>@customer.Name</td>
+            <td>@customer.Email</td>
+        </tr>
+    }
+    </tbody>
+</table>

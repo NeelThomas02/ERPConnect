@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ERPConnect.Data;
 using ERPConnect.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ERPConnect.Controllers
 {
@@ -23,13 +24,20 @@ namespace ERPConnect.Controllers
             var invoices = await _context.Invoices
                                          .Include(i => i.Customer)
                                          .ToListAsync();
+            Console.WriteLine($"[Billing][Index] Retrieved {invoices.Count} invoices");
             return View(invoices);
         }
 
         // GET: Billing/Create
-        // Presents a form for creating a new invoice.
         public IActionResult Create()
         {
+            var allCustomers = _context.Customers.AsNoTracking().ToList();
+            Console.WriteLine($"[Billing][Create GET] Customers in DB: {allCustomers.Count}");
+            ViewData["CustomerList"] = new SelectList(
+                _context.Customers.ToList(),
+                "CustomerId",
+                "Name"
+            );
             return View();
         }
 
@@ -39,8 +47,20 @@ namespace ERPConnect.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Invoice invoice)
         {
+            Console.WriteLine($"[Billing][Create POST] Received CustomerId={invoice.CustomerId}, Date={invoice.InvoiceDate}, Amount={invoice.TotalAmount}");
+            // Always repopulate dropdown before checking ModelState
+            ViewData["CustomerList"] = new SelectList(
+                 _context.Customers.ToList(),
+                 "CustomerId",
+                 "Name",
+                 invoice.CustomerId
+             );
+
             if (!ModelState.IsValid)
             {
+                Console.WriteLine("[Billing][Create POST] ModelState invalid:");
+                foreach (var err in ModelState.Values.SelectMany(v => v.Errors))
+                    Console.WriteLine("  • " + err.ErrorMessage);
                 // Log or inspect errors (or even display them temporarily)
                 foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
                 {
@@ -51,6 +71,7 @@ namespace ERPConnect.Controllers
 
             _context.Add(invoice);
             await _context.SaveChangesAsync();
+            Console.WriteLine($"[Billing][Create POST] Saved invoice ID {invoice.InvoiceId}");
             return RedirectToAction(nameof(Index));
         }
 

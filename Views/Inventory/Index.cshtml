@@ -1,23 +1,27 @@
 @model IEnumerable<ERPConnect.Models.InventoryItem>
 
-<h1>Inventory List</h1>
+@{
+    ViewData["Title"] = "Inventory List";
+}
 
-<table>
+<h1>@ViewData["Title"] (@Model.Count() items)</h1>
+
+<table class="table">
     <thead>
         <tr>
-            <th>Product Name</th>
+            <th>Product ID</th>
             <th>Quantity</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Product.Name</td>
-                <td>@item.Quantity</td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductId</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
     </tbody>
 </table>
 
-<a href="/Inventory/Create">Add New Inventory Item</a>
+<a asp-action="Create" class="btn btn-primary">Add New Inventory Item</a>

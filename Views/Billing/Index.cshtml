@@ -1,8 +1,13 @@
 @model IEnumerable<ERPConnect.Models.Invoice>
+@{
+    ViewData["Title"] = "Invoices";
+}
 
-<h1>Invoices</h1>
+<h1>@ViewData["Title"]</h1>
 
-<table>
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Invoice</a>
+
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Invoice ID</th>
@@ -12,16 +17,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var invoice in Model)
-        {
-            <tr>
-                <td>@invoice.InvoiceId</td>
-                <td>@invoice.Customer?.Name</td>
-                <td>@invoice.InvoiceDate.ToShortDateString()</td>
-                <td>@invoice.TotalAmount.ToString("C")</td>
-            </tr>
-        }
+    @foreach (var inv in Model)
+    {
+        <tr>
+            <td>@inv.InvoiceId</td>
+            <td>@inv.Customer?.Name</td>
+            <td>@inv.InvoiceDate.ToShortDateString()</td>
+            <td>@inv.TotalAmount.ToString("C")</td>
+        </tr>
+    }
     </tbody>
 </table>
-
-<a href="/Billing/Create">Create New Invoice</a>

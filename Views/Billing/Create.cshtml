@@ -1,30 +1,48 @@
 @model ERPConnect.Models.Invoice
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Mvc.Rendering
 
-<h1>Create New Invoice</h1>
+@{
+    ViewData["Title"] = "Create New Invoice";
+    // Cast to SelectList (not List<SelectListItem>)
+    var customerList = ViewData["CustomerList"] as SelectList;
+}
+
+<h1>@ViewData["Title"]</h1>
 
 <form asp-action="Create" method="post">
-    <div>
-        <label asp-for="CustomerId"></label>
-        <input asp-for="CustomerId" />
-        <span asp-validation-for="CustomerId"></span>
-    </div>
-    <div>
-        <label asp-for="InvoiceDate"></label>
-        <input asp-for="InvoiceDate" type="date" />
-        <span asp-validation-for="InvoiceDate"></span>
-    </div>
-    <div>
-        <label asp-for="TotalAmount"></label>
-        <input asp-for="TotalAmount" />
-        <span asp-validation-for="TotalAmount"></span>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="CustomerId" class="control-label"></label>
+        @Html.DropDownListFor(
+            m => m.CustomerId,
+            customerList,
+            "-- Select Customer --",
+            new { @class = "form-control" }
+        )
+        <span asp-validation-for="CustomerId" class="text-danger"></span>
     </div>
 
-    <button type="submit">Save Invoice</button>
+    <div class="form-group">
+        <label asp-for="InvoiceDate" class="control-label"></label>
+        <input asp-for="InvoiceDate" type="date" class="form-control" />
+        <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TotalAmount" class="control-label"></label>
+        <input asp-for="TotalAmount" class="form-control" />
+        <span asp-validation-for="TotalAmount" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Invoice</button>
 </form>
 
-
-<a href="/Billing/Index">Back to Invoices</a>
+<a asp-action="Index" class="btn btn-secondary">Back to Invoices</a>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
