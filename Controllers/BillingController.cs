@@ -4,26 +4,54 @@ using ERPConnect.Data;
 using ERPConnect.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ERPConnect.Services;
 
 namespace ERPConnect.Controllers
 {
     public class BillingController : Controller
     {
         private readonly ERPConnectContext _context;
+        private readonly IPdfService _pdfService;
 
         // Dependency injection: the DbContext is provided via the controller's constructor.
-        public BillingController(ERPConnectContext context)
+        public BillingController(ERPConnectContext context, IPdfService pdfService)
         {
             _context = context;
+            _pdfService = pdfService;
+        }
+
+        // GET: Billing/DownloadPdf/5
+        [HttpGet]
+        public async Task<IActionResult> DownloadPdf(int id)
+        {
+            // Load the invoice and its customer
+            var invoice = await _context.Invoices
+                                        .Include(i => i.Customer)
+                                        .FirstOrDefaultAsync(i => i.InvoiceId == id);
+            if (invoice == null) 
+                return NotFound();
+
+            var pdfBytes = _pdfService.GenerateInvoicePdf(invoice);
+            // Return a FileResult to trigger download
+            return File(pdfBytes, "application/pdf", $"Invoice_{id}.pdf");
         }
 
         // GET: Billing/Index
         // Retrieves a list of invoices, eagerly loading the associated Customer for each invoice.
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var invoices = await _context.Invoices
-                                         .Include(i => i.Customer)
-                                         .ToListAsync();
+            var invoicesQuery = _context.Invoices
+                                    .Include(i => i.Customer)
+                                    .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                invoicesQuery = invoicesQuery
+                    .Where(i => i.Customer.Name.Contains(searchString));
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var invoices = await invoicesQuery.ToListAsync();
             Console.WriteLine($"[Billing][Index] Retrieved {invoices.Count} invoices");
             return View(invoices);
         }

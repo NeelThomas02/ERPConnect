@@ -1,0 +1,85 @@
+@model ERPConnect.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Total Products</h5>
+                <p class="display-4">@Model.TotalProducts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Inventory Records</h5>
+                <p class="display-4">@Model.TotalInventoryRecords</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Total Stock</h5>
+                <p class="display-4">@Model.TotalInventoryQuantity</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Customers</h5>
+                <p class="display-4">@Model.TotalCustomers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Invoices</h5>
+                <p class="display-4">@Model.TotalInvoices</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Recent Invoices</h3>
+<table class="table table-sm mb-4">
+    <thead>
+        <tr><th>ID</th><th>Customer</th><th>Date</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var inv in Model.RecentInvoices)
+    {
+        <tr>
+            <td>@inv.InvoiceId</td>
+            <td>@inv.Customer?.Name</td>
+            <td>@inv.InvoiceDate.ToShortDateString()</td>
+            <td>@inv.TotalAmount.ToString("C")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h3>Recent Inventory Items</h3>
+<table class="table table-sm">
+    <thead>
+        <tr><th>ID</th><th>Product</th><th>Qty</th></tr>
+    </thead>
+    <tbody>
+    @foreach(var item in Model.RecentInventoryItems)
+    {
+        <tr>
+            <td>@item.InventoryItemId</td>
+            <td>@item.Product?.Name</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+    </tbody>
+</table>

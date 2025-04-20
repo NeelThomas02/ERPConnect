@@ -1,11 +1,26 @@
 @model IEnumerable<ERPConnect.Models.Invoice>
 @{
     ViewData["Title"] = "Invoices";
+    var currentFilter = ViewData["CurrentFilter"] as string;
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<a asp-action="Create" class="btn btn-primary mb-3">Add New Invoice</a>
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+        </span>
+        <input type="text" name="searchString" value="@currentFilter" class="form-control border-start-0"
+            placeholder="Search by customer..." />
+        <button class="btn btn-primary" type="submit">
+            Search
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-times"></i>
+        </a>
+    </div>
+</form>
 
 <table class="table table-striped">
     <thead>
@@ -14,17 +29,24 @@
             <th>Customer</th>
             <th>Date</th>
             <th>Total Amount</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var inv in Model)
-    {
-        <tr>
-            <td>@inv.InvoiceId</td>
-            <td>@inv.Customer?.Name</td>
-            <td>@inv.InvoiceDate.ToShortDateString()</td>
-            <td>@inv.TotalAmount.ToString("C")</td>
-        </tr>
-    }
+        @foreach (var inv in Model)
+        {
+            <tr>
+                <td>@inv.InvoiceId</td>
+                <td>@inv.Customer?.Name</td>
+                <td>@inv.InvoiceDate.ToShortDateString()</td>
+                <td>@inv.TotalAmount.ToString("C")</td>
+                <td>
+                    <a asp-controller="Billing" asp-action="DownloadPdf" asp-route-id="@inv.InvoiceId"
+                        class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

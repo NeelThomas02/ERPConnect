@@ -19,11 +19,24 @@ namespace ERPConnect.Controllers
         }
 
         // GET: Inventory/Index
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var items = await _context.InventoryItems
-                                      .Include(i => i.Product)
-                                      .ToListAsync();
+            // Base query
+            var itemsQuery = _context.InventoryItems
+                                     .Include(i => i.Product)
+                                     .AsQueryable();
+
+            // Apply search filter
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                itemsQuery = itemsQuery
+                    .Where(i => i.Product.Name.Contains(searchString));
+            }
+
+            // Preserve current filter for the view
+            ViewData["CurrentFilter"] = searchString;
+
+            var items = await itemsQuery.ToListAsync();
             Console.WriteLine($"[Inventory][Index] Retrieved {items.Count} items");
             return View(items);
         }

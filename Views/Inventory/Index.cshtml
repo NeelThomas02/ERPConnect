@@ -1,10 +1,26 @@
 @model IEnumerable<ERPConnect.Models.InventoryItem>
-
 @{
     ViewData["Title"] = "Inventory List";
+    var currentFilter = ViewData["CurrentFilter"] as string;
 }
 
 <h1>@ViewData["Title"] (@Model.Count() items)</h1>
+
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+            <i class="fas fa-search text-muted"></i>
+        </span>
+        <input type="text" name="searchString" value="@currentFilter" class="form-control border-start-0"
+            placeholder="Search products..." />
+        <button class="btn btn-primary" type="submit">
+            Search
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-times"></i>
+        </a>
+    </div>
+</form>
 
 <table class="table">
     <thead>
@@ -14,13 +30,13 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.ProductId</td>
-            <td>@item.Quantity</td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
     </tbody>
 </table>
 

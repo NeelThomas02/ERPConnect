@@ -1,5 +1,8 @@
 using ERPConnect.Data;
+using ERPConnect.Services;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF;             // for Settings
+using QuestPDF.Infrastructure; // for LicenseType
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,9 @@ builder.Services.AddControllersWithViews();
 // Configure Entity Framework Core with SQL Server.
 builder.Services.AddDbContext<ERPConnectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+QuestPDF.Settings.License = LicenseType.Community;
+builder.Services.AddScoped<IPdfService, PdfService>();
 
 var app = builder.Build();
 
@@ -28,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 app.Run();
