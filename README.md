@@ -36,7 +36,7 @@ It covers core modules—Products, Inventory, Customers, and Billing—with role
    cd ERPConnect
   ```
 2. Configure your database in appsettings.json:
-   ```bash
+   ```json
    "ConnectionStrings": {
   "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=ERPConnectDB;Trusted_Connection=True;TrustServerCertificate=True"
     }
