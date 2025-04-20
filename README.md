@@ -34,16 +34,17 @@ It covers core modules—Products, Inventory, Customers, and Billing—with role
    ```bash
    git clone https://github.com/your-username/ERPConnect.git
    cd ERPConnect
-```
+  ```
 2. Configure your database in `appsettings.json`:
 
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=ERPConnectDB;Trusted_Connection=True;TrustServerCertificate=True"
-  }
-}
-```
+    ```json
+    {
+      "ConnectionStrings": {
+        "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=ERPConnectDB;Trusted_Connection=True;TrustServerCertificate=True"
+      }
+    }
+    ```
+
 3. Apply migrations:
   ```bash
   dotnet ef database update
