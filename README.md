@@ -52,15 +52,15 @@ It covers core modules—Products, Inventory, Customers, and Billing—with role
 Open https://localhost:<PORT> in your browser.
 
 **Usage**
-**Dashboard**: Home screen with key metrics.
+- **Dashboard**: Home screen with key metrics.
 
-**Products**: Add/edit/delete products.
+- **Products**: Add/edit/delete products.
 
-**Inventory**: Stock items, filter by product name.
+- **Inventory**: Stock items, filter by product name.
 
-**Customers**: Manage customer records.
+- **Customers**: Manage customer records.
 
-**Billing**: Create/search invoices; download PDF.
+- **Billing**: Create/search invoices; download PDF.
 
 **License**
 This project is MIT‑licensed. QuestPDF is used under its Community license (no key required).
